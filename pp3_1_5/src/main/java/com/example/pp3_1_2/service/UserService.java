@@ -6,11 +6,11 @@ import com.example.pp3_1_2.entity.User;
 import java.util.List;
 
 public interface UserService {
-    public List<User> getAllUsers();
-    public void saveUser(User user);
+    List<User> getAllUsers();
+    void saveUser(User user);
 
-    public void deleteUser(int id);
-    public User getUser(int id);
+    void deleteUser(int id);
+    User getUser(int id);
 
-    public User findUserByEmail(String email);
+    User findUserByEmail(String email);
 }
