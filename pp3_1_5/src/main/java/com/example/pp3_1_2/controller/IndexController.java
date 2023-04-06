@@ -1,5 +1,6 @@
 package com.example.pp3_1_2.controller;
 
+import com.example.pp3_1_2.dao.UserRepository;
 import com.example.pp3_1_2.entity.User;
 import com.example.pp3_1_2.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,14 +11,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.security.Principal;
+import java.util.Optional;
 
 @Controller
 public class IndexController {
 
     private final UserService userService;
-    @Autowired
-    public IndexController(UserService userService) {
+    private final UserRepository userRepository;
+    public IndexController(UserService userService, UserRepository userRepository) {
         this.userService = userService;
+        this.userRepository = userRepository;
     }
 
     @RequestMapping("/index")
@@ -33,7 +36,7 @@ public class IndexController {
     @PreAuthorize ("hasAuthority('USER')")
     @GetMapping ("/user")
     public String userPage(Model model, Principal principal) {
-        User user = userService.findUserByEmail(principal.getName());
+        Optional<User> user = userRepository.findByEmail(principal.getName());
         model.addAttribute("user", user);
         return "user";
     }
